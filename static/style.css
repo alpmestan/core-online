@@ -168,8 +168,10 @@ td {
 
 .coreTitle a, a:visited, a:active {
     text-decoration: none;
+    color: #617798;
 }
 
 .coreTitle a:hover {
     text-decoration: underline;
+    color: #617798;
 }
