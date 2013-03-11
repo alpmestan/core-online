@@ -35,7 +35,7 @@ footer = H.p ! A.class_ "footer" $ do
     >>
     (H.a ! A.href "http://stackoverflow.com/a/6121495/193424" $ "Reading GHC Core (Stack Overflow)")
     >> H.br >>
-    ("Running GHC " >> (sequence_ . map H.toHtml . intersperse "," $ ghcVersions))
+    ("Running GHC " >> (sequence_ . map H.toHtml . intersperse ", " $ ghcVersions))
 
 selectFor :: Text -> Text -> [ (Text, Text) ] -> H.Html
 selectFor label name opts = do 
