@@ -4,9 +4,8 @@ module AddCore (addCoreH) where
 
 import Core
 import GHCCore
-import ViewCore
 
-import Control.Monad.Trans (liftIO)
+import Control.Monad.Reader
 import Database.SQLite.Simple
 import Happstack.Server
 import Text.Blaze.Html.Renderer.Text (renderHtml)
@@ -33,4 +32,4 @@ addCoreH conn = do
     let eCore    = LT.toStrict . renderHtml . format True $ tokensCore
     let coreData = Core cId author title eHaskell eCore optlevel ghcver
     liftIO $ insertCore conn coreData
-    viewCoreH True cId conn
+    seeOther ("/core/" `T.append` (T.pack $ show cId)) $ toResponse $ "The core you just added is viewable at http://almestan.com:4601" `T.append` "/core/" `T.append` (T.pack $ show cId)
