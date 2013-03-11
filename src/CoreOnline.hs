@@ -16,7 +16,7 @@ main = withConnection "db/cores.db" $ \conn -> do
     simpleHTTP myConf (coreApp conn)
 
 myConf :: Conf
-myConf = nullConf { port = 4601}
+myConf = nullConf { port = 31336 }
 
 myPolicy :: BodyPolicy
 myPolicy = defaultBodyPolicy "/tmp/" 0 1000 1000

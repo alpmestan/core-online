@@ -175,3 +175,8 @@ td {
     text-decoration: underline;
     color: #617798;
 }
+
+.about {
+    padding: 8px 16px;
+    border: 1px solid #617798;
+}

@@ -29,6 +29,10 @@ footer = H.p ! A.class_ "footer" $ do
     >>
     " - "
     >> 
+    (H.a ! A.href "/about" $ "About")
+    >> 
+    " - "
+    >>
     (H.a ! A.href "http://github.com/alpmestan/core-online" $ "Code on github")
     >>
     " - "
