@@ -15,8 +15,11 @@ import qualified Data.Text.IO as T
 ghcCoreDir :: FilePath
 ghcCoreDir = "./hs/"
 
-ghcCoreFor :: Int64 -> Text -> IO Text
-ghcCoreFor cid haskellCode = do
+ghcBinsDir :: FilePath
+ghcBinsDir = "/home/alpmestan/haskell/ghc/bin"
+
+ghcCoreFor :: Text -> Int64 -> Text -> IO Text
+ghcCoreFor ghcVer cid haskellCode = do
 	T.writeFile hsFilePath haskellModule
 	(exitStatus, out, err) <- readProcessWithExitCode ghc args ""
 	if exitStatus == ExitSuccess then return $ T.reverse . T.tail . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.reverse . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') $ T.pack out else let (ExitFailure code) = exitStatus in return $ failureMsg code out err
@@ -24,7 +27,7 @@ ghcCoreFor cid haskellCode = do
     where failureMsg code _ err = "GHC failed to compile, exit code: " `T.append`
               (T.pack . show $ code) `T.append` "\n" `T.append` (T.pack err)
           args = words $ "-c -O2 " ++ hsFilePath ++ " -ddump-simpl -dsuppress-idinfo -dsuppress-coercions -dsuppress-type-applications -dsuppress-uniques -dsuppress-module-prefixes"
-          ghc  = "ghc"
+          ghc  = ghcBinsDir </> ("ghc-" ++ T.unpack ghcVer)
           hsFilePath = ghcCoreDir </> hsFileName
           hsFileName = ("M" ++ show cid) <.> "hs"
           haskellModule = T.pack ("module M" ++ show cid ++ " where \n") `T.append` haskellCode

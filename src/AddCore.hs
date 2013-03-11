@@ -26,7 +26,7 @@ addCoreH conn = do
     ghcver         <- lookText' "ghcver"
     haskell        <- (`T.append` "\n") `fmap` lookText' "haskell"
     cId            <- liftIO $ getNextCoreId conn
-    core           <- liftIO $ ((`T.append` "\n") . T.tail . T.dropWhile (/='\n')) `fmap` (ghcCoreFor cId haskell) 
+    core           <- liftIO $ ((`T.append` "\n") . T.tail . T.dropWhile (/='\n')) `fmap` (ghcCoreFor ghcver cId haskell) 
     let (Right tokensHaskell) = runLexer lexer $ (T.encodeUtf8 haskell) -- True: we want line numbers
     let (Right tokensCore)    = runLexer lexer $ (T.encodeUtf8 core)    -- same here
     let eHaskell = LT.toStrict . renderHtml . format True $ tokensHaskell
