@@ -144,3 +144,24 @@ td {
 .code {
     padding: 4px 8px;
 }
+
+.coreTitle {
+    text-align: center;
+    color: #617798;
+}
+
+.coreDesc {
+    text-align: center;
+}
+
+.coreDescLabel {
+    color: #999999;
+}
+
+.coreTitle a, a:visited, a:active {
+    text-decoration: none;
+}
+
+.coreTitle a:hover {
+    text-decoration: underline;
+}

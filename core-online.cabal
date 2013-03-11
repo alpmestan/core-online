@@ -16,8 +16,16 @@ data-files:          static/highlight.css,
                      static/style.css      
 
 executable core-online
-  main-is:             src/CoreOnline.hs       
-  -- other-modules:       
+  main-is:             CoreOnline.hs
+  hs-source-dirs:      src/
+  other-modules:       About, 
+                       AddCore, 
+                       Core,
+                       GHCCore, 
+                       Home,
+                       Templates,
+                       Templates.CoreForm,
+                       ViewCore
   build-depends:       base >= 4 && < 5, 
                        happstack-server, 
                        bytestring, 
