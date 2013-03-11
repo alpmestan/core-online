@@ -13,7 +13,10 @@ import Happstack.Server
 
 main :: IO ()
 main = withConnection "db/cores.db" $ \conn -> do
-    simpleHTTP nullConf (coreApp conn)
+    simpleHTTP myConf (coreApp conn)
+
+myConf :: Conf
+myConf = nullConf { port = 4601}
 
 myPolicy :: BodyPolicy
 myPolicy = defaultBodyPolicy "/tmp/" 0 1000 1000
