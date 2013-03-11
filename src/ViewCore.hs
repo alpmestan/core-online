@@ -5,11 +5,8 @@ import Templates.ViewCore
 
 import Control.Monad.Trans (liftIO)
 import Data.Int
-import Data.Text (Text)
 import Database.SQLite.Simple
 import Happstack.Server
-
-import qualified Data.Text as T
 
 viewCoreH :: Bool -> Int64 -> Connection -> ServerPart Response
 viewCoreH justAddedMsg cId conn = liftIO (getCoreById conn cId) >>= f

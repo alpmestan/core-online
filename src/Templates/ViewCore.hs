@@ -10,7 +10,6 @@ import Control.Monad (when)
 import Text.Blaze ((!), toValue)
 import Text.Blaze.Html (preEscapedToHtml)
 
-import qualified Data.Text as T
 import qualified Text.Blaze.Html4.Strict as H
 import qualified Text.Blaze.Html4.Strict.Attributes as A
 
@@ -27,11 +26,17 @@ htmlForCore (Core{..}) = H.div ! A.class_ "container" $ do
         (H.span ! A.class_ "coreDescLabel" $ "optimization level: ")
         >>
         H.i (H.toHtml coreOptLevel)
+        >> 
+        H.br
+        >>
+        (H.span ! A.class_ "coreDescLabel" $ "ghc version: ")
+        >>
+        H.i (H.toHtml coreGhcVer)
     H.p ! A.class_ "paste" ! A.id "haskell" $ preEscapedToHtml coreHS
     H.p ! A.class_ "paste" ! A.id "core" $ preEscapedToHtml coreCore
     
 coreNotFound :: H.Html
-coreNotFound = template "Not found" [] ("the core you are looking for doesn't exist.")
+coreNotFound = template "Not found" [] (H.div ! A.class_ "badmsg" $ "the core you are looking for doesn't exist.")
 
 coreFound :: Bool -> Core -> H.Html
 coreFound justAddedMsg core = template title

@@ -17,13 +17,14 @@ data Core = Core
     , coreHS       :: Text
     , coreCore     :: Text
     , coreOptLevel :: Text
+    , coreGhcVer   :: Text
     } deriving Show
 
 instance FromRow Core where
-	fromRow = Core <$> field <*> field <*> field <*> field <*> field <*> field
+	fromRow = Core <$> field <*> field <*> field <*> field <*> field <*> field <*> field
 
 instance ToRow Core where
-	toRow (Core{..}) = toRow (coreId, coreAuthor, coreTitle, coreHS, coreCore, coreOptLevel)
+	toRow (Core{..}) = toRow (coreId, coreAuthor, coreTitle, coreHS, coreCore, coreOptLevel, coreGhcVer)
     
 getNextCoreId :: Connection -> IO Int64
 getNextCoreId conn = do
@@ -36,7 +37,7 @@ getNumberOfCores conn = do
     return nbCores
 
 insertCore :: Connection -> Core -> IO ()
-insertCore conn coreData = execute conn "insert into cores values (?, ?, ?, ?, ?, ?)" coreData
+insertCore conn coreData = execute conn "insert into cores values (?, ?, ?, ?, ?, ?, ?)" coreData
 
 getCoreById :: Connection -> Int64 -> IO (Maybe Core)
 getCoreById conn cId = do

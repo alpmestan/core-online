@@ -30,6 +30,14 @@ ghcCoreFor cid haskellCode = do
           haskellModule = T.pack ("module M" ++ show cid ++ " where \n") `T.append` haskellCode
 
 ghcVersions :: [Text]
-ghcVersions = [T.pack . unsafePerformIO $ do
-                  (_, out, _) <- readProcessWithExitCode "ghc" ["--numeric-version"] ""
-                  return out]
+ghcVersions = [ "7.6.2"
+              , "7.6.1"
+              , "7.4.2"
+              , "7.4.1"
+              , "7.2.2"
+              , "7.2.1"
+              , "7.0.4"
+              , "7.0.3"
+              , "7.0.2"
+              , "7.0.1"
+              , "6.12.3" ]

@@ -1,8 +1,6 @@
 module Home (home) where
 
 import Core
-import Templates
-import Templates.CoreForm
 import Templates.Home
 
 import Control.Monad.Trans (liftIO)

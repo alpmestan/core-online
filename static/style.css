@@ -6,6 +6,14 @@
     text-align: center;
 }
 
+.badmsg {
+    color: #FFFFFF;
+    background-color: #CC5555;
+    padding-top: 4px;
+    padding-bottom:4px;
+    text-align:center;
+}
+
 .header {
     text-align: center;
 }
@@ -57,7 +65,7 @@ form {
 	color: #999999; 
 }
 
-.title input, .author input, .optlevel select {
+.title input, .author input, .optlevel select, .ghcver select {
     margin-right: 600px;
 }
 

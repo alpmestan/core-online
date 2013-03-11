@@ -2,10 +2,10 @@
 
 module Templates.CoreForm where
 
+import GHCCore
 import Templates
 
-import Data.Text (Text)
-import Text.Blaze ((!), toValue)
+import Text.Blaze ((!))
 import qualified Text.Blaze.Html4.Strict as H
 import qualified Text.Blaze.Html4.Strict.Attributes as A
 
@@ -21,4 +21,7 @@ coreForm = H.p ! A.class_ "core-form" $ H.form ! A.action "/add" ! A.enctype "mu
                                           , ("Basic optimizations: -O1", "-O1")
                                           , ("Agressive optimizations: -O2", "-O2")
                                           ]
+    H.p ! A.class_ "ghcver" $ selectFor "GHC version"
+                                        "ghcver"
+                                        (map (\x -> (x, x)) ghcVersions)
     H.p ! A.class_ "submit" $ H.input ! A.type_ "submit" ! A.value "Submit"
