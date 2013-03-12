@@ -34,7 +34,7 @@ ghcCoreFor ghcVer cid haskellCode optlevel mName = do
                               then T.pack ("module M" ++ show cid ++ " where \n") `T.append` haskellCode
                               else haskellCode
           printInfos a b c d = T.putStrLn a >> T.putStrLn b >> T.putStrLn c >> T.putStrLn d
-          cleanUp = T.reverse . T.tail . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.reverse . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n')
+          cleanUp = T.snoc '\n' . T.dropWhile (/= '\n') . T.tail . T.reverse . T.tail . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.reverse . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n') . T.tail . T.dropWhile (/= '\n')
 
 ghcVersions :: [Text]
 ghcVersions = [ "7.6.2"
