@@ -5,6 +5,8 @@ module Templates (
                  , footer
                  , selectFor
                  , inputTextFor
+                 , inputTextWithHelpTextFor
+                 , checkboxFor
                  ) where
 import GHCCore
 
@@ -50,3 +52,16 @@ selectFor label name opts = do
 inputTextFor :: Text -> Text -> H.Html
 inputTextFor label name = 
     (H.label ! A.for (toValue name) $ H.toHtml label) >> (H.input ! A.type_ "text" ! A.id (toValue name) ! A.name (toValue name)) 
+
+inputTextWithHelpTextFor :: Text -> Text -> Text -> H.Html
+inputTextWithHelpTextFor label name helptext = do
+    H.label ! A.for (toValue name) $ H.toHtml label
+    H.input ! A.type_ "text" ! A.id (toValue name) ! A.name (toValue name)
+    H.span ! A.class_ "helptext" $ H.toHtml helptext
+
+checkboxFor :: Text -> Text -> Text -> H.Html
+checkboxFor label name helptext = do
+    H.label ! A.for (toValue name) $ H.toHtml label
+    H.br
+    H.input ! A.type_ "checkbox" ! A.id (toValue name) ! A.name (toValue name) ! A.style "width: 10px;"
+    H.span ! A.class_ "helptext" $ H.toHtml helptext

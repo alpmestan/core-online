@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-} 
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module AddCore (addCoreH) where
 
@@ -23,13 +24,14 @@ addCoreH conn = do
     title          <- lookText' "title"
     optlevel       <- lookText' "optlevel"
     ghcver         <- lookText' "ghcver"
+    modName        <- lookText' "modulename"
     haskell        <- (`T.append` "\n") `fmap` lookText' "haskell"
     cId            <- liftIO $ getNextCoreId conn
-    core           <- liftIO $ ((`T.append` "\n") . T.tail . T.dropWhile (/='\n')) `fmap` (ghcCoreFor ghcver cId haskell) 
+    core           <- liftIO $ ghcCoreFor ghcver cId haskell optlevel modName
     let (Right tokensHaskell) = runLexer lexer $ (T.encodeUtf8 haskell) -- True: we want line numbers
     let (Right tokensCore)    = runLexer lexer $ (T.encodeUtf8 core)    -- same here
     let eHaskell = LT.toStrict . renderHtml . format True $ tokensHaskell
     let eCore    = LT.toStrict . renderHtml . format True $ tokensCore
     let coreData = Core cId author title eHaskell eCore optlevel ghcver
     liftIO $ insertCore conn coreData
-    seeOther ("/core/" `T.append` (T.pack $ show cId)) $ toResponse $ "The core you just added is viewable at http://almestan.com:4601" `T.append` "/core/" `T.append` (T.pack $ show cId)
+    seeOther ("/core/" `T.append` (T.pack $ show cId)) $ toResponse $ "The core you just added is viewable at http://core.alpmestan.com" `T.append` "/core/" `T.append` (T.pack $ show cId)
