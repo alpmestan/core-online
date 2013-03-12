@@ -22,7 +22,7 @@ ghcCoreFor :: Text -> Int64 -> Text -> Text -> Text -> IO Text
 ghcCoreFor ghcVer cid haskellCode optlevel mName = do
 	T.writeFile hsFilePath haskellModule
 	(exitStatus, out, err) <- readProcessWithExitCode ghc args ""
-	if exitStatus == ExitSuccess then return . cleanup $ T.pack out else let (ExitFailure code) = exitStatus in return $ failureMsg code out err
+	if exitStatus == ExitSuccess then return . cleanUp $ T.pack out else let (ExitFailure code) = exitStatus in return $ failureMsg code out err
         
     where failureMsg code out err = "GHC failed to compile, exit code: " `T.append`
               (T.pack . show $ code) `T.append` "\n" `T.append` (T.pack out) `T.append` (T.pack err)
