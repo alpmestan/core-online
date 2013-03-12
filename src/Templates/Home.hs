@@ -11,7 +11,7 @@ import qualified Text.Blaze.Html4.Strict as H
 import qualified Text.Blaze.Html4.Strict.Attributes as A
             
 homeHtml :: Int64 -> H.Html
-homeHtml nbCores = template "bonsouare"
+homeHtml nbCores = template "core-online: easily generate and share GHC Core for your haskell code"
                       []
                       ((H.h1 ! A.class_ "header" $ "core-online - get the GHC Core for your haskell code and share it")
                        >>
