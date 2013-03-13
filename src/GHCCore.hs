@@ -26,7 +26,7 @@ ghcCoreFor ghcVer cid haskellCode optlevel mName = do
         
     where failureMsg code out err = "GHC failed to compile, exit code: " `T.append`
               (T.pack . show $ code) `T.append` "\n" `T.append` (T.pack out) `T.append` (T.pack err)
-          args = words $ "-c " ++ T.unpack optlevel ++ " " ++ hsFilePath ++ " -ddump-simpl -dsuppress-idinfo -dsuppress-coercions -dsuppress-type-applications -dsuppress-uniques -dsuppress-module-prefixes"
+          args = words $ "-c " ++ T.unpack optlevel ++ " " ++ hsFilePath ++ " -XSafe -ddump-simpl -dsuppress-idinfo -dsuppress-coercions -dsuppress-type-applications -dsuppress-uniques -dsuppress-module-prefixes"
           ghc  = ghcBinsDir </> ("ghc-" ++ T.unpack ghcVer)
           hsFilePath = ghcCoreDir </> hsFileName
           hsFileName = if mName == T.empty then ("M" ++ show cid) <.> "hs" else T.unpack mName <.> "hs"
