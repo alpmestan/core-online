@@ -14,7 +14,7 @@ import Happstack.Server
 
 instance FromReqURI CoreId where
     fromReqURI s = case fromReqURI s of
-        Just n  -> if n >= 0 
+        Just n  -> if n >= 1 
                       then Just (CoreId n) 
                       else Nothing
         Nothing -> Nothing 
