@@ -25,9 +25,9 @@ coreApp :: Connection -> ServerPart Response
 coreApp conn = do
     decodeBody myPolicy
     msum [ dir "static" $ serveDirectory EnableBrowsing ["index.html"] "./static"
-         , dir "core"   $ path $ \coreId -> viewCoreH False coreId conn
+         , dir "about"  $ about
          , dir "add"    $ do methodM POST
                              addCoreH conn
-         , dir "about"  $ about
+         , path $ \coreId -> viewCoreH False coreId conn
          , home conn
          ]
