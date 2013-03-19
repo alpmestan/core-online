@@ -1,6 +1,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Core where
 
@@ -9,9 +10,19 @@ import Control.Monad.Trans (liftIO)
 import Data.Int
 import Data.Text (Text)
 import Database.SQLite.Simple
+import Database.SQLite.Simple.FromField
+import Database.SQLite.Simple.ToField
+
+newtype CoreId = CoreId { unCoreId :: Int64 } deriving (Eq, FromField, ToField, Num)
+
+instance Show CoreId where
+    show c = show (unCoreId c)
+
+instance Read CoreId where
+    readsPrec n s = map (\(a,b) -> (CoreId a, b)) $ readsPrec n s
 
 data Core = Core 
-    { coreId       :: Int64
+    { coreId       :: CoreId
     , coreAuthor   :: Text
     , coreTitle    :: Text
     , coreHS       :: Text
@@ -26,12 +37,12 @@ instance FromRow Core where
 instance ToRow Core where
 	toRow (Core{..}) = toRow (coreId, coreAuthor, coreTitle, coreHS, coreCore, coreOptLevel, coreGhcVer)
     
-getNextCoreId :: Connection -> IO Int64
+getNextCoreId :: Connection -> IO CoreId
 getNextCoreId conn = do
-    (cids :: [Only Int64]) <- liftIO $ query_ conn "select id from cores order by id desc limit 1"
+    (cids :: [Only CoreId]) <- liftIO $ query_ conn "select id from cores order by id desc limit 1"
     return $ if cids == [] then 1 else fromOnly (head cids) + 1
 
-getNumberOfCores :: Connection -> IO Int64
+getNumberOfCores :: Connection -> IO CoreId 
 getNumberOfCores conn = do
     [Only nbCores] <- liftIO $ query_ conn "select count(id) from cores"
     return nbCores
@@ -39,9 +50,9 @@ getNumberOfCores conn = do
 insertCore :: Connection -> Core -> IO ()
 insertCore conn coreData = execute conn "insert into cores values (?, ?, ?, ?, ?, ?, ?)" coreData
 
-getCoreById :: Connection -> Int64 -> IO (Maybe Core)
+getCoreById :: Connection -> CoreId -> IO (Maybe Core)
 getCoreById conn cId = do
-    res <- liftIO $ query conn "select * from cores where id = ?" (Only (cId :: Int64))
+    res <- liftIO $ query conn "select * from cores where id = ?" (Only cId)
     case res of
         []    -> return Nothing
         (c:_) -> return (Just c)

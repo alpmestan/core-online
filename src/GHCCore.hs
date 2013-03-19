@@ -2,6 +2,8 @@
 
 module GHCCore (ghcCoreFor, ghcVersions) where
 
+import Core
+
 import Data.Int    
 import Data.Text (Text)
 import System.Exit
@@ -18,7 +20,7 @@ ghcCoreDir = "./hs/"
 ghcBinsDir :: FilePath
 ghcBinsDir = "/home/alpmestan/haskell/ghc/bin"
 
-ghcCoreFor :: Text -> Int64 -> Text -> Text -> Text -> IO Text
+ghcCoreFor :: Text -> CoreId -> Text -> Text -> Text -> IO Text
 ghcCoreFor ghcVer cid haskellCode optlevel mName = do
 	T.writeFile hsFilePath haskellModule
 	(exitStatus, out, err) <- readProcessWithExitCode ghc args ""

@@ -4,12 +4,20 @@ module Main where
 
 import About
 import AddCore
+import Core
 import Home
 import ViewCore
 
 import Control.Monad
 import Database.SQLite.Simple
 import Happstack.Server
+
+instance FromReqURI CoreId where
+    fromReqURI s = case fromReqURI s of
+        Just n  -> if n >= 0 
+                      then Just (CoreId n) 
+                      else Nothing
+        Nothing -> Nothing 
 
 main :: IO ()
 main = withConnection "db/cores.db" $ \conn -> do

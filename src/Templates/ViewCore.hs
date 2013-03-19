@@ -15,7 +15,7 @@ import qualified Text.Blaze.Html4.Strict.Attributes as A
 
 htmlForCore :: Core -> H.Html        
 htmlForCore (Core{..}) = H.div ! A.class_ "container" $ do
-    H.h1 ! A.class_ "coreTitle" $ H.a ! A.href (toValue $ "/core/" ++ show coreId) $ H.toHtml coreTitle
+    H.h1 ! A.class_ "coreTitle" $ H.a ! A.href (toValue $ "/" ++ show coreId) $ H.toHtml coreTitle
     H.p ! A.class_ "coreDesc" $ do
         (H.span ! A.class_ "coreDescLabel" $ "by: ")
         >>

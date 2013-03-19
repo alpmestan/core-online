@@ -34,4 +34,4 @@ addCoreH conn = do
     let eCore    = LT.toStrict . renderHtml . format True $ tokensCore
     let coreData = Core cId author title eHaskell eCore optlevel ghcver
     liftIO $ insertCore conn coreData
-    seeOther ("/core/" `T.append` (T.pack $ show cId)) $ toResponse $ "The core you just added is viewable at http://core.alpmestan.com" `T.append` "/core/" `T.append` (T.pack $ show cId)
+    seeOther ("/" `T.append` (T.pack $ show cId)) $ toResponse $ "The core you just added is viewable at http://core.alpmestan.com" `T.append` "/" `T.append` (T.pack $ show cId)
