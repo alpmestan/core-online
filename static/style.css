@@ -137,12 +137,14 @@ td {
 #haskell {
     width: 75%;
     max-width: 90%;
+    margin:auto;
     /* float:left; */
 }
 
 #core {
     width: 75%;
     max-width: 90%;
+    margin: auto;
     /* float:right; */
 }
 
